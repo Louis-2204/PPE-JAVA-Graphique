@@ -34,14 +34,14 @@ public class VueGenerale extends JFrame implements ActionListener {
         this.setTitle("Gestion du garage Val'Auto");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.setBounds(100, 100, 900, 500);
-        this.getContentPane().setBackground(new Color(234, 176, 69));
+        this.setBounds(100, 100, 915, 600);
+        this.getContentPane().setBackground(new Color(43, 140, 82));
         this.setLayout(null);
 
         // installation du panel du menu
 
         this.panelMenu.setBounds(50, 20, 800, 30);
-        this.panelMenu.setBackground(new Color(234, 176, 69));
+        this.panelMenu.setBackground(new Color(43, 140, 82));
         this.panelMenu.setLayout(new GridLayout(1, 6, 10, 0));
         this.panelMenu.add(this.btnProfil);
         this.panelMenu.add(this.btnEleves);

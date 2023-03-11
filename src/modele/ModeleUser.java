@@ -18,8 +18,9 @@ public class ModeleUser {
                 + unUser.getTel_u() + "','"
                 + unUser.getAdresse_u() + "','"
                 + unUser.getVille_u() + "','"
-                + unUser.getCodepos_u() + "','"
-                + unUser.getSexe_u() + "','"
+                + unUser.getCodepos_u() + "',"
+                + (unUser.getSexe_u() == "Ne souhaite pas répondre" ? "null" + ",'"
+                        : "'" + unUser.getSexe_u() + "','")
                 + unUser.getRole_u() + "','"
                 + unUser.getMdp_u() + "','"
                 + unUser.getSecurity_question() + "','"
@@ -45,7 +46,8 @@ public class ModeleUser {
                 + " adresse_u = '" + unUser.getAdresse_u() + "',"
                 + " ville_u = '" + unUser.getVille_u() + "',"
                 + " codepos_u = '" + unUser.getCodepos_u() + "',"
-                + " sexe_u = '" + unUser.getSexe_u() + "',"
+                + " sexe_u = " + (unUser.getSexe_u() == "Ne souhaite pas répondre" ? "null" + ","
+                        : "'" + unUser.getSexe_u() + "','")
                 + " role_u = '" + unUser.getRole_u() + "',"
                 + " mdp_u = '" + unUser.getMdp_u() + "',"
                 + " security_question = '" + unUser.getSecurity_question() + "',"
@@ -230,7 +232,7 @@ public class ModeleUser {
     }
 
     public static String[] selectMoniteurInfos(int id_u) {
-        String infos[] = null;
+        String infos[] = new String[2];
         String requete = "SELECT * FROM moniteur WHERE id_u = " + id_u + ";";
         try {
             uneBdd.seConnecter();

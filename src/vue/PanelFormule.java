@@ -1,14 +1,13 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,6 +23,7 @@ import controleur.Formule;
 public class PanelFormule extends PanelPrincipal implements ActionListener {
 
     private JPanel panelForm = new JPanel();
+    private JPanel panelWrap = new JPanel();
     private JTextField txtNom = new JTextField();
     private JTextField txtPrix = new JTextField();
     private JTextField txtNbHeures = new JTextField();
@@ -41,9 +41,8 @@ public class PanelFormule extends PanelPrincipal implements ActionListener {
 
         // construction du panel form
 
-        this.panelForm.setBounds(40, 60, 350, 250);
-        this.panelForm.setBackground(new Color(234, 176, 69));
-        this.panelForm.setLayout(new GridLayout(6, 2, 10, 10));
+        this.panelForm.setBackground(new Color(43, 140, 82));
+        this.panelForm.setLayout(new GridLayout(5, 2, 10, 10));
 
         this.panelForm.add(new JLabel("Nom: "));
         this.panelForm.add(this.txtNom);
@@ -67,13 +66,20 @@ public class PanelFormule extends PanelPrincipal implements ActionListener {
         this.tableUser.setShowVerticalLines(true);
 
         JScrollPane unScroll = new JScrollPane(this.tableUser);
-        unScroll.setBounds(400, 60, 350, 250);
 
-        // ajout du panel form au panel client
-        this.add(this.panelForm);
+        // ajout du panel wrap au panel client
+        this.panelWrap.add(this.panelForm);
+        this.panelWrap.add(unScroll);
 
-        // ajout de la JTable au panel client
-        this.add(unScroll);
+        this.panelWrap.setLayout(new GridLayout(2, 1, 10, 20));
+
+        this.panelWrap.setBackground(new Color(43, 140, 82));
+
+        JScrollPane scrollPrincipal = new JScrollPane(this.panelWrap);
+        scrollPrincipal.setBounds(50, 80, 715, 350);
+        scrollPrincipal.setBorder(null);
+
+        this.add(scrollPrincipal);
 
         // rendre les boutons cliquables
         this.btnAnnuler.addActionListener(this);
@@ -111,10 +117,8 @@ public class PanelFormule extends PanelPrincipal implements ActionListener {
             this.viderChamps();
         } else if (e.getSource() == this.btnEnregistrer) {
             if (this.txtNom.getText().equals("")
-                    || this.txtPrix.getText().equals("")
-                    || this.txtNbHeures.getText().equals("")
-                    || this.txtTypeBoite.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur",
+                    || this.txtPrix.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs obligatoire", "Erreur",
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 String nom = this.txtNom.getText();

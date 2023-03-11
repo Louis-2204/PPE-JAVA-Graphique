@@ -21,17 +21,21 @@ import controleur.C_User;
 import controleur.Tableau;
 import controleur.User;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class PanelMoniteur extends PanelPrincipal implements ActionListener {
 
     private JPanel panelForm = new JPanel();
+    private JPanel panelWrap = new JPanel();
     private JTextField txtNom = new JTextField();
     private JTextField txtPrenom = new JTextField();
     private JTextField txtDateNaissance = new JTextField();
     private JTextField txtEmail = new JTextField();
     private JTextField txtTel = new JTextField();
-    private JTextField txtAdresse = new JPasswordField();
-    private JTextField txtVille = new JPasswordField();
-    private JTextField txtCodePostal = new JPasswordField();
+    private JTextField txtAdresse = new JTextField();
+    private JTextField txtVille = new JTextField();
+    private JTextField txtCodePostal = new JTextField();
     private JComboBox<String> cbxSexe = new JComboBox<String>();
     private JTextField txtDateembauche = new JTextField();
     private JTextField txtDateobtentionbafm = new JTextField();
@@ -50,7 +54,7 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
         // construction du panel form
 
         this.panelForm.setBounds(40, 60, 350, 250);
-        this.panelForm.setBackground(new Color(234, 176, 69));
+        this.panelForm.setBackground(new Color(43, 140, 82));
         this.panelForm.setLayout(new GridLayout(13, 2, 10, 10));
 
         this.panelForm.add(new JLabel("Nom: "));
@@ -82,7 +86,7 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
 
         // construction de la JTable
         String entetes[] = { "ID User", "Nom", "Prenom", "Email", "Téléphone", "Date de naissance", "Adresse", "Ville",
-                "Code postal", "Sexe", "Rôle", "Date d'embauche", "Date d'obtention du BAFM", "Mot de passe" };
+                "Code postal", "Sexe", "Date d'embauche", "Date d'obtention du BAFM" };
         Object donnees[][] = this.getDonnees();
 
         this.unTableau = new Tableau(donnees, entetes);
@@ -91,14 +95,26 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
         this.tableUser.setShowGrid(false);
         this.tableUser.setShowVerticalLines(true);
 
+        this.tableUser.setBackground(new Color(255, 255, 255));
+
         JScrollPane unScroll = new JScrollPane(this.tableUser);
-        unScroll.setBounds(400, 60, 350, 250);
 
-        // ajout du panel form au panel client
-        this.add(this.panelForm);
+        // remplir le CBX Sexe
+        this.remplirCBX();
 
-        // ajout de la JTable au panel client
-        this.add(unScroll);
+        // ajout du panel wrap au panel client
+        this.panelWrap.add(this.panelForm);
+        this.panelWrap.add(unScroll);
+
+        this.panelWrap.setLayout(new GridLayout(2, 1, 10, 20));
+
+        this.panelWrap.setBackground(new Color(43, 140, 82));
+
+        JScrollPane scrollPrincipal = new JScrollPane(this.panelWrap);
+        scrollPrincipal.setBounds(50, 80, 715, 350);
+        scrollPrincipal.setBorder(null);
+
+        this.add(scrollPrincipal);
 
         // rendre les boutons cliquables
         this.btnAnnuler.addActionListener(this);
@@ -108,10 +124,10 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
     public Object[][] getDonnees() {
         String infos[] = null;
         ArrayList<User> lesUsers = C_User.selectAllUsers("moniteur");
-        Object[][] matrice = new Object[lesUsers.size()][14];
+        Object[][] matrice = new Object[lesUsers.size()][12];
         int i = 0;
         for (User unUser : lesUsers) {
-            // infos = C_User.selectMoniteurInfos(unUser.getId_u());
+            infos = C_User.selectMoniteurInfos(unUser.getId_u());
             matrice[i][0] = unUser.getId_u();
             matrice[i][1] = unUser.getNom_u();
             matrice[i][2] = unUser.getPrenom_u();
@@ -122,10 +138,8 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
             matrice[i][7] = unUser.getVille_u();
             matrice[i][8] = unUser.getCodepos_u();
             matrice[i][9] = unUser.getSexe_u();
-            matrice[i][10] = unUser.getRole_u();
-            matrice[i][11] = "test";
-            matrice[i][12] = "test";
-            matrice[i][13] = unUser.getMdp_u();
+            matrice[i][10] = infos[0];
+            matrice[i][11] = infos[1];
             i++;
         }
         return matrice;
@@ -136,8 +150,9 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
         this.cbxSexe.removeAllItems();
 
         // remplir le CBX Sexe
-        this.cbxSexe.addItem("H");
+        this.cbxSexe.addItem("M");
         this.cbxSexe.addItem("F");
+        this.cbxSexe.addItem("Ne souhaite pas répondre");
     }
 
     public void viderChamps() {
@@ -151,6 +166,8 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
         this.txtCodePostal.setText("");
         this.cbxSexe.setSelectedIndex(0);
         this.txtMdp.setText("");
+        this.txtDateembauche.setText("");
+        this.txtDateobtentionbafm.setText("");
     }
 
     @Override
@@ -177,6 +194,9 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
                 String sexe = this.cbxSexe.getSelectedItem().toString();
                 String mdp = this.txtMdp.getText();
 
+                String dateEmbauche = this.txtDateembauche.getText();
+                String dateBAFM = this.txtDateobtentionbafm.getText();
+
                 // instancier un User
                 User unUser = new User(nom, prenom, datenaissance, email, tel, adresse, ville, codepos,
                         sexe, "moniteur", mdp, "Temporaire", "Temporaire");
@@ -184,15 +204,33 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
                 // on l'enregistre dans la base de donnÃ©es
                 C_User.insertUser(unUser);
 
+                // cryptage du mot de passe
+                try {
+                    MessageDigest md = MessageDigest.getInstance("SHA-1");
+                    md.update(mdp.getBytes());
+                    byte[] digest = md.digest();
+                    StringBuffer sb = new StringBuffer();
+                    for (byte b : digest) {
+                        sb.append(String.format("%02x", b & 0xff));
+                    }
+                    mdp = sb.toString();
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                }
+
                 // rÃ©cupÃ©rer l'id de l'User insÃ©rÃ© Ã  partir de la BDD
                 unUser = C_User.selectWhereUser(email, mdp);
 
                 // on ajoute les infos dans la table moniteur
+                C_User.insertMoniteurInfos(unUser.getId_u(), dateEmbauche, dateBAFM);
+
+                // on récupère les infos du moniteur
+                String infos[] = C_User.selectMoniteurInfos(unUser.getId_u());
 
                 // on recharge la JTable
                 Object ligne[] = { unUser.getId_u(), unUser.getNom_u(), unUser.getPrenom_u(), unUser.getEmail_u(),
                         unUser.getTel_u(), unUser.getDatenaissance_u(), unUser.getAdresse_u(), unUser.getVille_u(),
-                        unUser.getCodepos_u(), unUser.getSexe_u(), unUser.getRole_u(), unUser.getMdp_u() };
+                        unUser.getCodepos_u(), unUser.getSexe_u(), infos[0], infos[1] };
                 this.unTableau.insertLigne(ligne);
 
                 // on affiche un message de confirmation

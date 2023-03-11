@@ -21,17 +21,21 @@ import controleur.C_User;
 import controleur.Tableau;
 import controleur.User;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class PanelEleve extends PanelPrincipal implements ActionListener {
 
     private JPanel panelForm = new JPanel();
+    private JPanel panelWrap = new JPanel();
     private JTextField txtNom = new JTextField();
     private JTextField txtPrenom = new JTextField();
     private JTextField txtDateNaissance = new JTextField();
     private JTextField txtEmail = new JTextField();
     private JTextField txtTel = new JTextField();
-    private JTextField txtAdresse = new JPasswordField();
-    private JTextField txtVille = new JPasswordField();
-    private JTextField txtCodePostal = new JPasswordField();
+    private JTextField txtAdresse = new JTextField();
+    private JTextField txtVille = new JTextField();
+    private JTextField txtCodePostal = new JTextField();
     private JComboBox<String> cbxSexe = new JComboBox<String>();
     private JPasswordField txtMdp = new JPasswordField();
 
@@ -43,12 +47,12 @@ public class PanelEleve extends PanelPrincipal implements ActionListener {
 
     public PanelEleve() {
         super();
-        this.titre.setText("_______ Users _______");
+        this.titre.setText("_______ Élèves _______");
 
         // construction du panel form
 
         this.panelForm.setBounds(40, 60, 350, 250);
-        this.panelForm.setBackground(new Color(234, 176, 69));
+        this.panelForm.setBackground(new Color(43, 140, 82));
         this.panelForm.setLayout(new GridLayout(11, 2, 10, 10));
 
         this.panelForm.add(new JLabel("Nom: "));
@@ -76,7 +80,7 @@ public class PanelEleve extends PanelPrincipal implements ActionListener {
 
         // construction de la JTable
         String entetes[] = { "ID User", "Nom", "Prenom", "Email", "Téléphone", "Date de naissance", "Adresse", "Ville",
-                "Code postal", "Sexe", "Rôle", "Mot de passe" };
+                "Code postal", "Sexe" };
         Object donnees[][] = this.getDonnees();
 
         this.unTableau = new Tableau(donnees, entetes);
@@ -88,11 +92,22 @@ public class PanelEleve extends PanelPrincipal implements ActionListener {
         JScrollPane unScroll = new JScrollPane(this.tableUser);
         unScroll.setBounds(400, 60, 350, 250);
 
-        // ajout du panel form au panel client
-        this.add(this.panelForm);
+        // remplir le CBX Sexe
+        this.remplirCBX();
 
-        // ajout de la JTable au panel client
-        this.add(unScroll);
+        // ajout du panel wrap au panel client
+        this.panelWrap.add(this.panelForm);
+        this.panelWrap.add(unScroll);
+
+        this.panelWrap.setLayout(new GridLayout(2, 1, 10, 20));
+
+        this.panelWrap.setBackground(new Color(43, 140, 82));
+
+        JScrollPane scrollPrincipal = new JScrollPane(this.panelWrap);
+        scrollPrincipal.setBounds(50, 80, 715, 350);
+        scrollPrincipal.setBorder(null);
+
+        this.add(scrollPrincipal);
 
         // rendre les boutons cliquables
         this.btnAnnuler.addActionListener(this);
@@ -101,7 +116,7 @@ public class PanelEleve extends PanelPrincipal implements ActionListener {
 
     public Object[][] getDonnees() {
         ArrayList<User> lesUsers = C_User.selectAllUsers("eleve");
-        Object[][] matrice = new Object[lesUsers.size()][12];
+        Object[][] matrice = new Object[lesUsers.size()][10];
         int i = 0;
         for (User UnUser : lesUsers) {
             matrice[i][0] = UnUser.getId_u();
@@ -114,8 +129,6 @@ public class PanelEleve extends PanelPrincipal implements ActionListener {
             matrice[i][7] = UnUser.getVille_u();
             matrice[i][8] = UnUser.getCodepos_u();
             matrice[i][9] = UnUser.getSexe_u();
-            matrice[i][10] = UnUser.getRole_u();
-            matrice[i][11] = UnUser.getMdp_u();
             i++;
         }
         return matrice;
@@ -126,8 +139,9 @@ public class PanelEleve extends PanelPrincipal implements ActionListener {
         this.cbxSexe.removeAllItems();
 
         // remplir le CBX Sexe
-        this.cbxSexe.addItem("H");
+        this.cbxSexe.addItem("M");
         this.cbxSexe.addItem("F");
+        this.cbxSexe.addItem("Ne souhaite pas répondre");
     }
 
     public void viderChamps() {
@@ -174,13 +188,27 @@ public class PanelEleve extends PanelPrincipal implements ActionListener {
                 // on l'enregistre dans la base de donnÃ©es
                 C_User.insertUser(unUser);
 
+                // cryptage du mot de passe
+                try {
+                    MessageDigest md = MessageDigest.getInstance("SHA-1");
+                    md.update(mdp.getBytes());
+                    byte[] digest = md.digest();
+                    StringBuffer sb = new StringBuffer();
+                    for (byte b : digest) {
+                        sb.append(String.format("%02x", b & 0xff));
+                    }
+                    mdp = sb.toString();
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                }
+
                 // rÃ©cupÃ©rer l'id de l'User insÃ©rÃ© Ã  partir de la BDD
                 unUser = C_User.selectWhereUser(email, mdp);
 
                 // on recharge la JTable
                 Object ligne[] = { unUser.getId_u(), unUser.getNom_u(), unUser.getPrenom_u(), unUser.getEmail_u(),
                         unUser.getTel_u(), unUser.getDatenaissance_u(), unUser.getAdresse_u(), unUser.getVille_u(),
-                        unUser.getCodepos_u(), unUser.getSexe_u(), unUser.getRole_u(), unUser.getMdp_u() };
+                        unUser.getCodepos_u(), unUser.getSexe_u() };
                 this.unTableau.insertLigne(ligne);
 
                 // on affiche un message de confirmation

@@ -1,13 +1,16 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -20,6 +23,8 @@ import java.awt.event.ActionListener;
 public class PanelProfil extends PanelPrincipal implements ActionListener {
 
     private JPanel panelForm = new JPanel();
+    private JPanel panelWrap = new JPanel();
+    private JPanel InfosWrap = new JPanel();
     private JTextField txtNom = new JTextField();
     private JTextField txtPrenom = new JTextField();
     private JTextField txtDateNaissance = new JTextField();
@@ -28,7 +33,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
     private JTextField txtAdresse = new JTextField();
     private JTextField txtVille = new JTextField();
     private JTextField txtCodePostal = new JTextField();
-    private JTextField cbxSexe = new JTextField();
+    private JComboBox<String> cbxSexe = new JComboBox<String>();
     private JPasswordField txtMdp = new JPasswordField();
 
     private JButton btnAnnuler = new JButton("Annuler");
@@ -45,8 +50,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         super();
         this.titre.setText("_______ Mon profil _______");
 
-        this.panelForm.setBounds(400, 60, 350, 250);
-        this.panelForm.setBackground(new Color(234, 176, 69));
+        this.panelForm.setBackground(new Color(43, 140, 82));
         this.panelForm.setLayout(new GridLayout(11, 2, 10, 10));
 
         this.panelForm.add(new JLabel("Nom: "));
@@ -73,12 +77,13 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         this.panelForm.add(this.btnEnregistrer);
 
         // ajout du panel form au panel client
-        this.add(this.panelForm);
         this.panelForm.setVisible(false);
 
+        // remplir le CBX Sexe
+        this.remplirCBX();
+
         // installation du textArea
-        this.txtInfos.setBounds(40, 50, 300, 180);
-        this.txtInfos.setBackground(new Color(234, 176, 69));
+        this.txtInfos.setBackground(new Color(43, 140, 82));
         this.unU = VueConnexion.getUser();
         this.txtInfos.setText("_________ Informations _________\n\n"
                 + "Nom: " + unU.getNom_u() + " " + unU.getPrenom_u() + "\n\n"
@@ -88,11 +93,11 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
                 + "Adresse: " + unU.getAdresse_u() + "\n\n"
                 + "Ville: " + unU.getVille_u() + "\n\n"
                 + "Code postal: " + unU.getCodepos_u() + "\n\n"
-                + "Sexe: " + unU.getSexe_u() + "\n\n"
+                + "Sexe: " + (unU.getSexe_u() == null ? "Ne souhaite pas répondre" + "\n\n"
+                        : unU.getSexe_u() + "\n\n")
                 + "Rôle: " + unU.getRole_u() + "\n\n");
 
         this.txtInfos.setEditable(false);
-        this.add(this.txtInfos);
 
         // remplir les infos du formulaire
         this.txtNom.setText(this.unU.getNom_u());
@@ -102,17 +107,42 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         this.txtDateNaissance.setText(this.unU.getDatenaissance_u());
         this.txtAdresse.setText(this.unU.getAdresse_u());
         this.txtVille.setText(this.unU.getVille_u());
+        this.cbxSexe.setSelectedItem(this.unU.getSexe_u() == null ? "Ne souhaite pas répondre" : this.unU.getSexe_u());
         this.txtCodePostal.setText(this.unU.getCodepos_u());
-        this.cbxSexe.setText(this.unU.getSexe_u());
-        this.txtMdp.setText(this.unU.getMdp_u());
 
-        this.btnModifier.setBounds(40, 250, 300, 40);
-        this.add(this.btnModifier);
+        // installation du panel wrap
+        this.InfosWrap.setLayout(new GridLayout(2, 1, 10, 10));
+        this.InfosWrap.add(this.txtInfos);
+        this.InfosWrap.add(this.btnModifier);
+
+        // ajout du panel wrap au panel client
+        this.panelWrap.add(this.InfosWrap);
+        this.panelWrap.add(this.panelForm);
+
+        this.panelWrap.setLayout(new GridLayout(2, 1, 10, 20));
+
+        this.panelWrap.setBackground(new Color(43, 140, 82));
+
+        JScrollPane scrollPrincipal = new JScrollPane(this.panelWrap);
+        scrollPrincipal.setBounds(50, 80, 715, 350);
+        scrollPrincipal.setBorder(null);
+
+        this.add(scrollPrincipal);
 
         // rendre les boutons cliquables
         this.btnAnnuler.addActionListener(this);
         this.btnEnregistrer.addActionListener(this);
         this.btnModifier.addActionListener(this);
+    }
+
+    public void remplirCBX() {
+        // supprimer ou vider le CBX Sexe
+        this.cbxSexe.removeAllItems();
+
+        // remplir le CBX Sexe
+        this.cbxSexe.addItem("H");
+        this.cbxSexe.addItem("F");
+        this.cbxSexe.addItem("Ne souhaite pas répondre");
     }
 
     public void viderChamps() {
@@ -124,7 +154,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         this.txtAdresse.setText("");
         this.txtVille.setText("");
         this.txtCodePostal.setText("");
-        this.cbxSexe.setText("");
+        this.cbxSexe.setSelectedIndex(0);
         this.txtMdp.setText("");
     }
 
@@ -157,7 +187,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
                 String adresse = this.txtAdresse.getText();
                 String ville = this.txtVille.getText();
                 String codepos = this.txtCodePostal.getText();
-                String sexe = this.unU.getSexe_u();
+                String sexe = this.cbxSexe.getSelectedItem().toString();
                 String mdp = new String(this.txtMdp.getPassword());
                 // instancier un technicien
                 this.unU = new User(unU.getId_u(), nom, prenom, datenaissance, email, tel, adresse, ville, codepos,

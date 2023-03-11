@@ -23,9 +23,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class VueConnexion extends JFrame implements ActionListener, KeyListener {
     private JTextField txtEmail = new JTextField("admin@gmail.com");
-    private JPasswordField txtMdp = new JPasswordField("40bd001563085fc35165329ea1ff5c5ecbdbbeef");
+    private JPasswordField txtMdp = new JPasswordField("123");
     private JButton btnAnnuler = new JButton("Annuler");
     private JButton btnSeConnecter = new JButton("Se connecter");
     private JPanel panelConnexion = new JPanel();
@@ -99,6 +102,21 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
     public void traitement() {
         String email = this.txtEmail.getText();
         String mdp = new String(this.txtMdp.getPassword());
+
+        // cryptage du mot de passe
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            md.update(mdp.getBytes());
+            byte[] digest = md.digest();
+            StringBuffer sb = new StringBuffer();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            mdp = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         // vérification dans la base de données
         unUserConnecte = C_User.selectWhereUser(email, mdp);
         if (unUserConnecte == null) {

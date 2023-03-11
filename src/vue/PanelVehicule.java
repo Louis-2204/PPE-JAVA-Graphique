@@ -24,6 +24,7 @@ import controleur.Vehicule;
 public class PanelVehicule extends PanelPrincipal implements ActionListener {
 
     private JPanel panelForm = new JPanel();
+    private JPanel panelWrap = new JPanel();
     private JTextField txtType = new JTextField();
     private JTextField txtModele = new JTextField();
     private JTextField txtMarque = new JTextField();
@@ -43,7 +44,7 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
         // construction du panel form
 
         this.panelForm.setBounds(40, 60, 350, 250);
-        this.panelForm.setBackground(new Color(234, 176, 69));
+        this.panelForm.setBackground(new Color(43, 140, 82));
         this.panelForm.setLayout(new GridLayout(6, 2, 10, 10));
 
         this.panelForm.add(new JLabel("Type: "));
@@ -72,11 +73,19 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
         JScrollPane unScroll = new JScrollPane(this.tableUser);
         unScroll.setBounds(400, 60, 350, 250);
 
-        // ajout du panel form au panel client
-        this.add(this.panelForm);
+        // ajout du panel wrap au panel client
+        this.panelWrap.add(this.panelForm);
+        this.panelWrap.add(unScroll);
 
-        // ajout de la JTable au panel client
-        this.add(unScroll);
+        this.panelWrap.setLayout(new GridLayout(2, 1, 10, 20));
+
+        this.panelWrap.setBackground(new Color(43, 140, 82));
+
+        JScrollPane scrollPrincipal = new JScrollPane(this.panelWrap);
+        scrollPrincipal.setBounds(50, 80, 715, 350);
+        scrollPrincipal.setBorder(null);
+
+        this.add(scrollPrincipal);
 
         // rendre les boutons cliquables
         this.btnAnnuler.addActionListener(this);

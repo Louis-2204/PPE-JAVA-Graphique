@@ -74,8 +74,8 @@ public class ModeleVehicule {
                         desResultats.getString("type_v"),
                         desResultats.getString("model_v"),
                         desResultats.getString("marque_v"),
-                        desResultats.getString("annneimmatri_v"),
-                        desResultats.getString("anneachat_v"));
+                        desResultats.getString("annneimmatri_v").substring(0, 4),
+                        desResultats.getString("anneachat_v").substring(0, 4));
                 // on ajoute le Vehicule dans l'ArrayList
                 lesVehicules.add(unVehicule);
             }
@@ -117,7 +117,7 @@ public class ModeleVehicule {
             String anneeAchat) {
         Vehicule unVehicule = null;
         String requete = "SELECT * FROM vehicule WHERE type_v = '" + type + "' AND model_v = '" + modele
-                + "' AND marque_v = '" + marque + "' AND anneimmatri_v = '" + anneeImmat + "' AND anneachat_v = '"
+                + "' AND marque_v = '" + marque + "' AND annneimmatri_v = '" + 2000 + "' AND anneachat_v = '"
                 + anneeAchat + "';";
         try {
             uneBdd.seConnecter();
@@ -131,8 +131,8 @@ public class ModeleVehicule {
                         unResultat.getString("type_v"),
                         unResultat.getString("model_v"),
                         unResultat.getString("marque_v"),
-                        unResultat.getString("anneimmatri_v"),
-                        unResultat.getString("anneachat_v"));
+                        unResultat.getString("annneimmatri_v").substring(0, 4),
+                        unResultat.getString("anneachat_v").substring(0, 4));
             }
             unStat.close();
             uneBdd.seDeconnecter();
