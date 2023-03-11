@@ -107,11 +107,11 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
 
     public Object[][] getDonnees() {
         String infos[] = null;
-        ArrayList<User> lesUsers = C_User.selectAllUsers();
+        ArrayList<User> lesUsers = C_User.selectAllUsers("moniteur");
         Object[][] matrice = new Object[lesUsers.size()][14];
         int i = 0;
         for (User unUser : lesUsers) {
-            infos = C_User.selectMoniteurInfos(unUser.getId_u());
+            // infos = C_User.selectMoniteurInfos(unUser.getId_u());
             matrice[i][0] = unUser.getId_u();
             matrice[i][1] = unUser.getNom_u();
             matrice[i][2] = unUser.getPrenom_u();
@@ -123,8 +123,8 @@ public class PanelMoniteur extends PanelPrincipal implements ActionListener {
             matrice[i][8] = unUser.getCodepos_u();
             matrice[i][9] = unUser.getSexe_u();
             matrice[i][10] = unUser.getRole_u();
-            matrice[i][11] = infos[0];
-            matrice[i][12] = infos[1];
+            matrice[i][11] = "test";
+            matrice[i][12] = "test";
             matrice[i][13] = unUser.getMdp_u();
             i++;
         }

@@ -16,6 +16,10 @@ public class C_User {
         return ModeleUser.selectAllUsers();
     }
 
+    public static ArrayList<User> selectAllUsers(String role) {
+        return ModeleUser.selectAllUsers(role);
+    }
+
     public static void updateUser(User unUser) {
         ModeleUser.updateUser(unUser);
     }

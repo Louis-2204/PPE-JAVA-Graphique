@@ -74,7 +74,7 @@ public class ModeleVehicule {
                         desResultats.getString("type_v"),
                         desResultats.getString("model_v"),
                         desResultats.getString("marque_v"),
-                        desResultats.getString("anneimmatri_v"),
+                        desResultats.getString("annneimmatri_v"),
                         desResultats.getString("anneachat_v"));
                 // on ajoute le Vehicule dans l'ArrayList
                 lesVehicules.add(unVehicule);

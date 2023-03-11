@@ -31,7 +31,7 @@ public class VueGenerale extends JFrame implements ActionListener {
     private PanelVehicule unPanelVehicule = new PanelVehicule();
 
     public VueGenerale() {
-        this.setTitle("Gestion des interventions Orange");
+        this.setTitle("Gestion du garage Val'Auto");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setBounds(100, 100, 900, 500);

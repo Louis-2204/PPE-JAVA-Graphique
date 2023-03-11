@@ -25,9 +25,9 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
     private JTextField txtDateNaissance = new JTextField();
     private JTextField txtEmail = new JTextField();
     private JTextField txtTel = new JTextField();
-    private JTextField txtAdresse = new JPasswordField();
-    private JTextField txtVille = new JPasswordField();
-    private JTextField txtCodePostal = new JPasswordField();
+    private JTextField txtAdresse = new JTextField();
+    private JTextField txtVille = new JTextField();
+    private JTextField txtCodePostal = new JTextField();
     private JTextField cbxSexe = new JTextField();
     private JPasswordField txtMdp = new JPasswordField();
 

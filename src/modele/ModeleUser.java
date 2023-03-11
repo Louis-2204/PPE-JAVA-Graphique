@@ -111,6 +111,42 @@ public class ModeleUser {
         return lesUsers;
     }
 
+    public static ArrayList<User> selectAllUsers(String role) {
+        ArrayList<User> lesUsers = new ArrayList<User>();
+        String requete = "SELECT * FROM user WHERE role_u = '" + role + "';";
+        try {
+            uneBdd.seConnecter();
+            Statement unStat = uneBdd.getMaConnexion().createStatement();
+            // recuperation des Users
+            java.sql.ResultSet desResultats = unStat.executeQuery(requete);
+            // on parcours les resultats et on instancie les Users
+            while (desResultats.next()) {
+                User unUser = new User(
+                        desResultats.getInt("id_u"),
+                        desResultats.getString("nom_u"),
+                        desResultats.getString("prenom_u"),
+                        desResultats.getString("datenaissance_u"),
+                        desResultats.getString("email_u"),
+                        desResultats.getString("tel_u"),
+                        desResultats.getString("adresse_u"),
+                        desResultats.getString("ville_u"),
+                        desResultats.getString("codepos_u"),
+                        desResultats.getString("sexe_u"),
+                        desResultats.getString("role_u"),
+                        desResultats.getString("mdp_u"),
+                        desResultats.getString("security_question"),
+                        desResultats.getString("security_answer"));
+                // on ajoute le User dans l'ArrayList
+                lesUsers.add(unUser);
+            }
+            unStat.close();
+            uneBdd.seDeconnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur d'execution de la requete : " + requete);
+        }
+        return lesUsers;
+    }
+
     public static User selectWhereUser(int id_u) {
         User unUser = null;
         String requete = "SELECT * FROM user WHERE id_u = " + id_u + ";";

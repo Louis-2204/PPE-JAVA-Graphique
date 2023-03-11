@@ -100,7 +100,7 @@ public class PanelEleve extends PanelPrincipal implements ActionListener {
     }
 
     public Object[][] getDonnees() {
-        ArrayList<User> lesUsers = C_User.selectAllUsers();
+        ArrayList<User> lesUsers = C_User.selectAllUsers("eleve");
         Object[][] matrice = new Object[lesUsers.size()][12];
         int i = 0;
         for (User UnUser : lesUsers) {
