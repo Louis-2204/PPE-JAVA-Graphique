@@ -1,7 +1,6 @@
 package vue;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -59,7 +58,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         this.panelForm.add(this.txtPrenom);
         this.panelForm.add(new JLabel("Email: "));
         this.panelForm.add(this.txtEmail);
-        this.panelForm.add(new JLabel("Téléphone: "));
+        this.panelForm.add(new JLabel("Telephone: "));
         this.panelForm.add(this.txtTel);
         this.panelForm.add(new JLabel("Date de naissance: "));
         this.panelForm.add(this.txtDateNaissance);
@@ -88,12 +87,12 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         this.txtInfos.setText("_________ Informations _________\n\n"
                 + "Nom: " + unU.getNom_u() + " " + unU.getPrenom_u() + "\n\n"
                 + "Email: " + unU.getEmail_u() + "\n\n"
-                + "Téléphone: " + unU.getTel_u() + "\n\n"
+                + "Telephone: " + unU.getTel_u() + "\n\n"
                 + "Date de naissance: " + unU.getDatenaissance_u() + "\n\n"
                 + "Adresse: " + unU.getAdresse_u() + "\n\n"
                 + "Ville: " + unU.getVille_u() + "\n\n"
                 + "Code postal: " + unU.getCodepos_u() + "\n\n"
-                + "Sexe: " + (unU.getSexe_u() == null ? "Ne souhaite pas répondre" + "\n\n"
+                + "Sexe: " + (unU.getSexe_u() == null ? "Ne souhaite pas repondre" + "\n\n"
                         : unU.getSexe_u() + "\n\n")
                 + "Rôle: " + unU.getRole_u() + "\n\n");
 
@@ -107,11 +106,11 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         this.txtDateNaissance.setText(this.unU.getDatenaissance_u());
         this.txtAdresse.setText(this.unU.getAdresse_u());
         this.txtVille.setText(this.unU.getVille_u());
-        this.cbxSexe.setSelectedItem(this.unU.getSexe_u() == null ? "Ne souhaite pas répondre" : this.unU.getSexe_u());
+        this.cbxSexe.setSelectedItem(this.unU.getSexe_u() == null ? "Ne souhaite pas repondre" : this.unU.getSexe_u());
         this.txtCodePostal.setText(this.unU.getCodepos_u());
 
         // installation du panel wrap
-        this.InfosWrap.setLayout(new GridLayout(2, 1, 10, 10));
+        this.InfosWrap.setLayout(new GridLayout(2, 1));
         this.InfosWrap.add(this.txtInfos);
         this.InfosWrap.add(this.btnModifier);
 
@@ -142,7 +141,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         // remplir le CBX Sexe
         this.cbxSexe.addItem("H");
         this.cbxSexe.addItem("F");
-        this.cbxSexe.addItem("Ne souhaite pas répondre");
+        this.cbxSexe.addItem("Ne souhaite pas repondre");
     }
 
     public void viderChamps() {
@@ -192,14 +191,14 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
                 // instancier un technicien
                 this.unU = new User(unU.getId_u(), nom, prenom, datenaissance, email, tel, adresse, ville, codepos,
                         sexe, unU.getRole_u(), mdp, unU.getSecurity_question(), unU.getSecurity_answer());
-                // on l'enregistre dans la base de données
+                // on l'enregistre dans la base de donnees
                 C_User.updateUser(unU);
 
-                JOptionPane.showMessageDialog(this, "Modification de votre profil effectuée avec succès");
+                JOptionPane.showMessageDialog(this, "Modification de votre profil effectuee avec succès");
                 this.txtInfos.setText("_________ Informations _________\n\n"
                         + "Nom: " + unU.getNom_u() + " " + unU.getPrenom_u() + "\n\n"
                         + "Email: " + unU.getEmail_u() + "\n\n"
-                        + "Téléphone: " + unU.getTel_u() + "\n\n"
+                        + "Telephone: " + unU.getTel_u() + "\n\n"
                         + "Date de naissance: " + unU.getDatenaissance_u() + "\n\n"
                         + "Adresse: " + unU.getAdresse_u() + "\n\n"
                         + "Ville: " + unU.getVille_u() + "\n\n"

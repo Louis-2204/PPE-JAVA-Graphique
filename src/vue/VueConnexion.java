@@ -41,11 +41,11 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
     }
 
     public VueConnexion() {
-        this.setTitle("Gestion des interventions Orange");
+        this.setTitle("Gestion du garage - Connexion");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setBounds(100, 100, 600, 300);
-        this.getContentPane().setBackground(new Color(234, 176, 69));
+        this.getContentPane().setBackground(new Color(43, 140, 82));
         this.setLayout(null);
 
         // instanciation de l'image logo
@@ -59,7 +59,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
         // installation du panel de connexion
 
         this.panelConnexion.setBounds(250, 30, 280, 200);
-        this.panelConnexion.setBackground(new Color(234, 176, 69));
+        this.panelConnexion.setBackground(new Color(43, 140, 82));
         this.panelConnexion.setLayout(new GridLayout(3, 2));
 
         this.panelConnexion.add(new JLabel("Email :"));
