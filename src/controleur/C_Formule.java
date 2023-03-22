@@ -3,7 +3,6 @@ package controleur;
 import java.util.ArrayList;
 import java.util.Scanner;
 import modele.ModeleFormule;
-import vue.VueFormule;
 
 public class C_Formule {
     public static void insertFormule(Formule uneFormule) {

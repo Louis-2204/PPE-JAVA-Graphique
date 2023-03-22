@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import modele.ModeleUser;
-import vue.VueUser;
 
 public class C_User {
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import modele.ModeleVehicule;
-import vue.VueVehicule;
 
 public class C_Vehicule {
     public static void insertVehicule(Vehicule unVehicule) {
