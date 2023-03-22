@@ -117,7 +117,7 @@ public class ModeleVehicule {
             String anneeAchat) {
         Vehicule unVehicule = null;
         String requete = "SELECT * FROM vehicule WHERE type_v = '" + type + "' AND model_v = '" + modele
-                + "' AND marque_v = '" + marque + "' AND annneimmatri_v = '" + 2000 + "' AND anneachat_v = '"
+                + "' AND marque_v = '" + marque + "' AND annneimmatri_v = '" + anneeImmat + "' AND anneachat_v = '"
                 + anneeAchat + "';";
         try {
             uneBdd.seConnecter();
