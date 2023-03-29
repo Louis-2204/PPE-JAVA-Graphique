@@ -47,7 +47,7 @@ public class ModeleUser {
                 + " ville_u = '" + unUser.getVille_u() + "',"
                 + " codepos_u = '" + unUser.getCodepos_u() + "',"
                 + " sexe_u = " + (unUser.getSexe_u() == "Ne souhaite pas répondre" ? "null" + ","
-                        : "'" + unUser.getSexe_u() + "','")
+                        : "'" + unUser.getSexe_u() + "',")
                 + " role_u = '" + unUser.getRole_u() + "',"
                 + " mdp_u = '" + unUser.getMdp_u() + "',"
                 + " security_question = '" + unUser.getSecurity_question() + "',"
