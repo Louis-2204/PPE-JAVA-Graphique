@@ -39,6 +39,14 @@ public class C_User {
         ModeleUser.insertMoniteurInfos(id_u, dateembauche, dateobtentionbafm);
     }
 
+    public static void updateMoniteurInfos(int id_u, String dateembauche, String dateobtentionbafm) {
+        ModeleUser.updateMoniteurInfos(id_u, dateembauche, dateobtentionbafm);
+    }
+
+    public static void deleteMoniteurInfos(int id_u) {
+        ModeleUser.deleteMoniteurInfos(id_u);
+    }
+
     public static String[] selectMoniteurInfos(int id_u) {
         return ModeleUser.selectMoniteurInfos(id_u);
     }

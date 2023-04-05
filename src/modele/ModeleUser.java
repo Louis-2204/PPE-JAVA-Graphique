@@ -231,6 +231,33 @@ public class ModeleUser {
         }
     }
 
+    public static void updateMoniteurInfos(int id_u, String dateembauche, String dateobtentionbafm) {
+        String requete = "UPDATE moniteur SET dateembauche = '" + dateembauche + "', dateobtentionbafm = '"
+                + dateobtentionbafm + "' WHERE id_u = " + id_u + ";";
+        try {
+            uneBdd.seConnecter();
+            Statement unStat = uneBdd.getMaConnexion().createStatement();
+            unStat.execute(requete);
+            unStat.close();
+            uneBdd.seDeconnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur d'execution de la requete : " + requete);
+        }
+    }
+
+    public static void deleteMoniteurInfos(int id_u) {
+        String requete = "DELETE FROM moniteur WHERE id_u = " + id_u + ";";
+        try {
+            uneBdd.seConnecter();
+            Statement unStat = uneBdd.getMaConnexion().createStatement();
+            unStat.execute(requete);
+            unStat.close();
+            uneBdd.seDeconnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur d'execution de la requete : " + requete);
+        }
+    }
+
     public static String[] selectMoniteurInfos(int id_u) {
         String infos[] = new String[2];
         String requete = "SELECT * FROM moniteur WHERE id_u = " + id_u + ";";

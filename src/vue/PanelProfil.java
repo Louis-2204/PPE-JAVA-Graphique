@@ -92,7 +92,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
                 + "Adresse: " + unU.getAdresse_u() + "\n\n"
                 + "Ville: " + unU.getVille_u() + "\n\n"
                 + "Code postal: " + unU.getCodepos_u() + "\n\n"
-                + "Sexe: " + (unU.getSexe_u() == null ? "Ne souhaite pas repondre" + "\n\n"
+                + "Sexe: " + (unU.getSexe_u() == null ? "Ne souhaite pas répondre" + "\n\n"
                         : unU.getSexe_u() + "\n\n")
                 + "Rôle: " + unU.getRole_u() + "\n\n");
 
@@ -106,7 +106,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         this.txtDateNaissance.setText(this.unU.getDatenaissance_u());
         this.txtAdresse.setText(this.unU.getAdresse_u());
         this.txtVille.setText(this.unU.getVille_u());
-        this.cbxSexe.setSelectedItem(this.unU.getSexe_u() == null ? "Ne souhaite pas repondre" : this.unU.getSexe_u());
+        this.cbxSexe.setSelectedItem(this.unU.getSexe_u() == null ? "Ne souhaite pas répondre" : this.unU.getSexe_u());
         this.txtCodePostal.setText(this.unU.getCodepos_u());
 
         // installation du panel wrap
@@ -141,7 +141,7 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         // remplir le CBX Sexe
         this.cbxSexe.addItem("H");
         this.cbxSexe.addItem("F");
-        this.cbxSexe.addItem("Ne souhaite pas repondre");
+        this.cbxSexe.addItem("Ne souhaite pas répondre");
     }
 
     public void viderChamps() {

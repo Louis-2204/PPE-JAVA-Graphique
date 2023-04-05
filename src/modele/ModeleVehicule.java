@@ -32,7 +32,7 @@ public class ModeleVehicule {
                 + " type_v = '" + unVehicule.getType_v() + "',"
                 + " model_v = '" + unVehicule.getModel_v() + "',"
                 + " marque_v = '" + unVehicule.getMarque_v() + "',"
-                + " anneimmatri_v = '" + unVehicule.getAnnneimmatri_v() + "',"
+                + " annneimmatri_v = '" + unVehicule.getAnnneimmatri_v() + "',"
                 + " anneachat_v = '" + unVehicule.getAnneachat_v() + "'"
                 + " WHERE id_v = " + unVehicule.getId_v() + ";";
         try {

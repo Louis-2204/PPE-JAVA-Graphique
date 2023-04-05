@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import controleur.C_Vehicule;
@@ -90,6 +92,56 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
         // rendre les boutons cliquables
         this.btnAnnuler.addActionListener(this);
         this.btnEnregistrer.addActionListener(this);
+
+        // implémentation de la supression / modification d'une ligne
+        this.tableUser.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+                int numLigne = tableUser.getSelectedRow();
+                int idVehicule = Integer.parseInt(tableUser.getValueAt(numLigne, 0).toString());
+                if (e.getClickCount() >= 2) {
+                    viderChamps();
+                    btnEnregistrer.setText("Enregistrer");
+                    int retour = JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer ce véhicule?",
+                            "Suppression formule", JOptionPane.YES_NO_OPTION);
+                    if (retour == 0) {
+                        C_Vehicule.deleteVehicule(idVehicule);
+                        unTableau.deleteLigne(numLigne);
+                        JOptionPane.showMessageDialog(null, "Véhicule supprimé avec succès");
+                    }
+                } else if (e.getClickCount() == 1) {
+                    txtType.setText(tableUser.getValueAt(numLigne, 1).toString());
+                    txtModele.setText(tableUser.getValueAt(numLigne, 2).toString());
+                    txtMarque.setText(tableUser.getValueAt(numLigne, 3).toString());
+                    txtAnneeImmat.setText(tableUser.getValueAt(numLigne, 4).toString());
+                    txtAnneeAchat.setText(tableUser.getValueAt(numLigne, 5).toString());
+                    btnEnregistrer.setText("Modifier");
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+        });
     }
 
     public Object[][] getDonnees() {
@@ -108,9 +160,6 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
         return matrice;
     }
 
-    public void remplirCBX() {
-    }
-
     public void viderChamps() {
         this.txtType.setText("");
         this.txtModele.setText("");
@@ -123,7 +172,7 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAnnuler) {
             this.viderChamps();
-        } else if (e.getSource() == this.btnEnregistrer) {
+        } else if (e.getSource() == this.btnEnregistrer && this.btnEnregistrer.getText().equals("Enregistrer")) {
             if (this.txtType.getText().equals("")
                     || this.txtModele.getText().equals("")
                     || this.txtMarque.getText().equals("")
@@ -157,6 +206,43 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
 
                 // on vide les champs
                 this.viderChamps();
+            }
+        } else if (e.getSource() == this.btnEnregistrer && this.btnEnregistrer.getText().equals("Modifier")) {
+            if (this.txtType.getText().equals("")
+                    || this.txtModele.getText().equals("")
+                    || this.txtMarque.getText().equals("")
+                    || this.txtAnneeImmat.getText().equals("")
+                    || this.txtAnneeAchat.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                int numLigne = this.tableUser.getSelectedRow();
+                int idVehicule = Integer.parseInt(this.tableUser.getValueAt(numLigne, 0).toString());
+
+                String type = this.txtType.getText();
+                String modele = this.txtModele.getText();
+                String marque = this.txtMarque.getText();
+                String anneeImmat = this.txtAnneeImmat.getText();
+                String anneeAchat = this.txtAnneeAchat.getText();
+
+                // on instancie un Vehicule
+                Vehicule unVehicule = new Vehicule(idVehicule, type, modele, marque, anneeImmat, anneeAchat);
+
+                // on le modifie dans la base de donnÃ©es
+                C_Vehicule.updateVehicule(unVehicule);
+
+                // on recharge la JTable
+                Object ligne[] = { unVehicule.getId_v(), unVehicule.getType_v(), unVehicule.getModel_v(),
+                        unVehicule.getMarque_v(), unVehicule.getAnnneimmatri_v(), unVehicule.getAnneachat_v() };
+                this.unTableau.updateLigne(numLigne, ligne);
+                // on affiche un message de confirmation
+                JOptionPane.showMessageDialog(this, "Véhicule modifié avec succès");
+
+                // on vide les champs
+                this.viderChamps();
+
+                // on remet le bouton enregistrer en mode "Enregistrer"
+                this.btnEnregistrer.setText("Enregistrer");
             }
         }
     }

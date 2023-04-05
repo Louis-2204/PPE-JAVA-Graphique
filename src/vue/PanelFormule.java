@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import controleur.C_Formule;
@@ -84,6 +86,55 @@ public class PanelFormule extends PanelPrincipal implements ActionListener {
         // rendre les boutons cliquables
         this.btnAnnuler.addActionListener(this);
         this.btnEnregistrer.addActionListener(this);
+
+        // implémentation de la supression / modification d'une ligne
+        this.tableUser.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+                int numLigne = tableUser.getSelectedRow();
+                int idFormule = Integer.parseInt(tableUser.getValueAt(numLigne, 0).toString());
+                if (e.getClickCount() >= 2) {
+                    viderChamps();
+                    btnEnregistrer.setText("Enregistrer");
+                    int retour = JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer cette formule?",
+                            "Suppression formule", JOptionPane.YES_NO_OPTION);
+                    if (retour == 0) {
+                        C_Formule.deleteFormule(idFormule);
+                        unTableau.deleteLigne(numLigne);
+                        JOptionPane.showMessageDialog(null, "Formule supprimé avec succès");
+                    }
+                } else if (e.getClickCount() == 1) {
+                    txtNom.setText(tableUser.getValueAt(numLigne, 1).toString());
+                    txtPrix.setText(tableUser.getValueAt(numLigne, 2).toString());
+                    txtNbHeures.setText(tableUser.getValueAt(numLigne, 3).toString());
+                    txtTypeBoite.setText(tableUser.getValueAt(numLigne, 4).toString());
+                    btnEnregistrer.setText("Modifier");
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+        });
     }
 
     public Object[][] getDonnees() {
@@ -115,10 +166,12 @@ public class PanelFormule extends PanelPrincipal implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.btnAnnuler) {
             this.viderChamps();
-        } else if (e.getSource() == this.btnEnregistrer) {
+        } else if (e.getSource() == this.btnEnregistrer && this.btnEnregistrer.getText().equals("Enregistrer")) {
             if (this.txtNom.getText().equals("")
-                    || this.txtPrix.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs obligatoire", "Erreur",
+                    || this.txtPrix.getText().equals("")
+                    || this.txtNbHeures.getText().equals("")
+                    || this.txtTypeBoite.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs obligatoires", "Erreur",
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 String nom = this.txtNom.getText();
@@ -146,6 +199,42 @@ public class PanelFormule extends PanelPrincipal implements ActionListener {
 
                 // on vide les champs
                 this.viderChamps();
+            }
+        } else if (e.getSource() == this.btnEnregistrer && this.btnEnregistrer.getText().equals("Modifier")) {
+            if (this.txtNom.getText().equals("")
+                    || this.txtPrix.getText().equals("")
+                    || this.txtNbHeures.getText().equals("")
+                    || this.txtTypeBoite.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                int numLigne = this.tableUser.getSelectedRow();
+                int idFormule = Integer.parseInt(this.tableUser.getValueAt(numLigne, 0).toString());
+
+                String nom = this.txtNom.getText();
+                // on convertit le String en Float
+                Float prix = Float.parseFloat(this.txtPrix.getText());
+                Float nbHeures = Float.parseFloat(this.txtNbHeures.getText());
+                String typeBoite = this.txtTypeBoite.getText();
+
+                // on instancie une Formule
+                Formule uneFormule = new Formule(idFormule, nom, prix, nbHeures, typeBoite);
+
+                // on la modifie dans la base de données
+                C_Formule.updateFormule(uneFormule);
+
+                // on recharge la JTable
+                Object ligne[] = { uneFormule.getId_f(), uneFormule.getNom_f(), uneFormule.getPrix_f(),
+                        uneFormule.getNb_heures(), uneFormule.getType_boite() };
+                this.unTableau.updateLigne(numLigne, ligne);
+                // on affiche un message de confirmation
+                JOptionPane.showMessageDialog(this, "Formule modifié avec succès");
+
+                // on vide les champs
+                this.viderChamps();
+
+                // on remet le bouton enregistrer en mode "Enregistrer"
+                this.btnEnregistrer.setText("Enregistrer");
             }
         }
     }
