@@ -14,7 +14,7 @@ public class ModeleVehicule {
                 + unVehicule.getType_v() + "','"
                 + unVehicule.getModel_v() + "','"
                 + unVehicule.getMarque_v() + "','"
-                + unVehicule.getAnnneimmatri_v() + "','"
+                + unVehicule.getAnneimmatri_v() + "','"
                 + unVehicule.getAnneachat_v() + "');";
         try {
             uneBdd.seConnecter();
@@ -32,7 +32,7 @@ public class ModeleVehicule {
                 + " type_v = '" + unVehicule.getType_v() + "',"
                 + " model_v = '" + unVehicule.getModel_v() + "',"
                 + " marque_v = '" + unVehicule.getMarque_v() + "',"
-                + " annneimmatri_v = '" + unVehicule.getAnnneimmatri_v() + "',"
+                + " anneimmatri_v = '" + unVehicule.getAnneimmatri_v() + "',"
                 + " anneachat_v = '" + unVehicule.getAnneachat_v() + "'"
                 + " WHERE id_v = " + unVehicule.getId_v() + ";";
         try {
@@ -74,7 +74,7 @@ public class ModeleVehicule {
                         desResultats.getString("type_v"),
                         desResultats.getString("model_v"),
                         desResultats.getString("marque_v"),
-                        desResultats.getString("annneimmatri_v").substring(0, 4),
+                        desResultats.getString("anneimmatri_v").substring(0, 4),
                         desResultats.getString("anneachat_v").substring(0, 4));
                 // on ajoute le Vehicule dans l'ArrayList
                 lesVehicules.add(unVehicule);
@@ -117,7 +117,7 @@ public class ModeleVehicule {
             String anneeAchat) {
         Vehicule unVehicule = null;
         String requete = "SELECT * FROM vehicule WHERE type_v = '" + type + "' AND model_v = '" + modele
-                + "' AND marque_v = '" + marque + "' AND annneimmatri_v = '" + anneeImmat + "' AND anneachat_v = '"
+                + "' AND marque_v = '" + marque + "' AND anneimmatri_v = '" + anneeImmat + "' AND anneachat_v = '"
                 + anneeAchat + "';";
         try {
             uneBdd.seConnecter();
@@ -131,7 +131,7 @@ public class ModeleVehicule {
                         unResultat.getString("type_v"),
                         unResultat.getString("model_v"),
                         unResultat.getString("marque_v"),
-                        unResultat.getString("annneimmatri_v").substring(0, 4),
+                        unResultat.getString("anneimmatri_v").substring(0, 4),
                         unResultat.getString("anneachat_v").substring(0, 4));
             }
             unStat.close();

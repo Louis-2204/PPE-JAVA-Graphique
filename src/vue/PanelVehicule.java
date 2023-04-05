@@ -153,7 +153,7 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
             matrice[i][1] = unVehicule.getType_v();
             matrice[i][2] = unVehicule.getModel_v();
             matrice[i][3] = unVehicule.getMarque_v();
-            matrice[i][4] = unVehicule.getAnnneimmatri_v();
+            matrice[i][4] = unVehicule.getAnneimmatri_v();
             matrice[i][5] = unVehicule.getAnneachat_v();
             i++;
         }
@@ -198,7 +198,7 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
 
                 // on recharge la JTable
                 Object ligne[] = { unVehicule.getId_v(), unVehicule.getType_v(), unVehicule.getModel_v(),
-                        unVehicule.getMarque_v(), unVehicule.getAnnneimmatri_v(), unVehicule.getAnneachat_v() };
+                        unVehicule.getMarque_v(), unVehicule.getAnneimmatri_v(), unVehicule.getAnneachat_v() };
                 this.unTableau.insertLigne(ligne);
 
                 // on affiche un message de confirmation
@@ -233,7 +233,7 @@ public class PanelVehicule extends PanelPrincipal implements ActionListener {
 
                 // on recharge la JTable
                 Object ligne[] = { unVehicule.getId_v(), unVehicule.getType_v(), unVehicule.getModel_v(),
-                        unVehicule.getMarque_v(), unVehicule.getAnnneimmatri_v(), unVehicule.getAnneachat_v() };
+                        unVehicule.getMarque_v(), unVehicule.getAnneimmatri_v(), unVehicule.getAnneachat_v() };
                 this.unTableau.updateLigne(numLigne, ligne);
                 // on affiche un message de confirmation
                 JOptionPane.showMessageDialog(this, "Véhicule modifié avec succès");
