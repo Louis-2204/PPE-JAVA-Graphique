@@ -1,44 +1,46 @@
 package controleur;
 
 public class Vehicule {
-	private int id_v;
-	private String type_v, model_v, marque_v, anneimmatri_v, anneachat_v;
+	private String type_v, model_v, marque_v, anneimmatri_v, anneachat_v,type_boite,matricule;
 
-	public Vehicule(int id_v, String type_v, String model_v, String marque_v,
-			String anneimmatri_v, String anneachat_v) {
-		this.id_v = id_v;
+	public Vehicule(String matricule, String type_v, String model_v, String marque_v,
+			String anneimmatri_v, String anneachat_v, String type_boite) {
+		this.matricule = matricule;
 		this.type_v = type_v;
 		this.model_v = model_v;
 		this.marque_v = marque_v;
 		this.anneimmatri_v = anneimmatri_v;
 		this.anneachat_v = anneachat_v;
+		this.type_boite = type_boite;
 	}
 
 	public Vehicule(String type_v, String model_v, String marque_v,
-			String anneimmatri_v, String anneachat_v) {
-		this.id_v = 0;
+			String anneimmatri_v, String anneachat_v, String type_boite) {
+		this.matricule = "";
 		this.type_v = type_v;
 		this.model_v = model_v;
 		this.marque_v = marque_v;
 		this.anneimmatri_v = anneimmatri_v;
 		this.anneachat_v = anneachat_v;
+		this.type_boite = type_boite;
 	}
 
 	public Vehicule() {
-		this.id_v = 0;
+		this.matricule = "";
 		this.type_v = "";
 		this.model_v = "";
 		this.marque_v = "";
 		this.anneimmatri_v = "";
 		this.anneachat_v = "";
+		this.type_boite = "";
 	}
 
-	public int getId_v() {
-		return id_v;
+	public String getMatricule() {
+		return matricule;
 	}
 
-	public void setId_v(int id_v) {
-		this.id_v = id_v;
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
 	}
 
 	public String getType_v() {
@@ -81,4 +83,11 @@ public class Vehicule {
 		this.anneachat_v = anneachat_v;
 	}
 
+	public String getType_boite() {
+		return type_boite;
+	}
+
+	public void setType_boite(String type_boite) {
+		this.type_boite = type_boite;
+	}
 }

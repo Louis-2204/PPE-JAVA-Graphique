@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ModeleFormule {
-    private static Bdd uneBdd = new Bdd("localhost", "autoecole", "root", "");
+    private static Bdd uneBdd = new Bdd("54.81.36.203:13392", "autoecole", "alexys", "alexys");
 
     public static void insertFormule(Formule uneFormule) {
         String requete = "INSERT INTO formule VALUES ( null,'"
@@ -21,7 +21,7 @@ public class ModeleFormule {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -39,7 +39,7 @@ public class ModeleFormule {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -52,7 +52,7 @@ public class ModeleFormule {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -78,7 +78,7 @@ public class ModeleFormule {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
         return lesFormules;
     }
@@ -103,7 +103,7 @@ public class ModeleFormule {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
         return uneFormule;
     }
@@ -129,7 +129,7 @@ public class ModeleFormule {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
         return uneFormule;
     }

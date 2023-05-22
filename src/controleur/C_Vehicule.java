@@ -18,16 +18,16 @@ public class C_Vehicule {
         ModeleVehicule.updateVehicule(unVehicule);
     }
 
-    public static void deleteVehicule(int idVehicule) {
-        ModeleVehicule.deleteVehicule(idVehicule);
+    public static void deleteVehicule(String matricule) {
+        ModeleVehicule.deleteVehicule(matricule);
     }
 
-    public static Vehicule selectWhereVehicule(int idVehicule) {
-        return ModeleVehicule.selectWhereVehicule(idVehicule);
+    public static Vehicule selectWhereVehicule(String matricule) {
+        return ModeleVehicule.selectWhereVehicule(matricule);
     }
 
     public static Vehicule selectWhereVehicule(String type, String modele, String marque, String anneeImmat,
-            String anneeAchat) {
-        return ModeleVehicule.selectWhereVehicule(type, modele, marque, anneeImmat, anneeAchat);
+            String anneeAchat, String typeBoite) {
+        return ModeleVehicule.selectWhereVehicule(type, modele, marque, anneeImmat, anneeAchat, typeBoite);
     }
 }

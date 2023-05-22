@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import controleur.User;
 
 public class ModeleUser {
-    private static Bdd uneBdd = new Bdd("localhost", "autoecole", "root", "");
+    private static Bdd uneBdd = new Bdd("54.81.36.203:13392", "autoecole", "alexys", "alexys");
 
     public static void insertUser(User unUser) {
         String requete = "INSERT INTO user VALUES ( null,'"
@@ -32,7 +32,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -60,7 +60,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -73,7 +73,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -108,7 +108,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
         return lesUsers;
     }
@@ -144,7 +144,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
         return lesUsers;
     }
@@ -178,7 +178,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
         return unUser;
     }
@@ -212,7 +212,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
         return unUser;
     }
@@ -227,7 +227,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -241,7 +241,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -254,7 +254,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
     }
 
@@ -274,7 +274,7 @@ public class ModeleUser {
             unStat.close();
             uneBdd.seDeconnecter();
         } catch (SQLException exp) {
-            System.out.println("Erreur d'execution de la requete : " + requete);
+            System.out.println("Erreur d'execution de la requete : " + requete + exp);
         }
         return infos;
     }
