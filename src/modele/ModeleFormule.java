@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ModeleFormule {
-    private static Bdd uneBdd = new Bdd("54.81.36.203:13392", "autoecole", "alexys", "alexys");
+    private static Bdd uneBdd = new Bdd("3.227.101.247:13392", "autoecole", "alexys", "alexys");
 
     public static void insertFormule(Formule uneFormule) {
         String requete = "INSERT INTO formule VALUES ( null,'"

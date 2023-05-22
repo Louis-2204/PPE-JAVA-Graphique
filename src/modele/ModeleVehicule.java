@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import controleur.Vehicule;
 
 public class ModeleVehicule {
-    private static Bdd uneBdd = new Bdd("54.81.36.203:13392", "autoecole", "alexys", "alexys");
+    private static Bdd uneBdd = new Bdd("3.227.101.247:13392", "autoecole", "alexys", "alexys");
 
     public static void insertVehicule(Vehicule unVehicule) {
         String requete = "INSERT INTO vehicule VALUES ( '"+ unVehicule.getMatricule() + "','"
@@ -16,7 +16,8 @@ public class ModeleVehicule {
                 + unVehicule.getMarque_v() + "','"
                 + unVehicule.getAnneimmatri_v() + "','"
                 + unVehicule.getAnneachat_v() + "','"
-                + unVehicule.getType_boite() + "');";
+                + unVehicule.getType_boite() + "','"
+                + unVehicule.getKm() + "');";
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -35,7 +36,8 @@ public class ModeleVehicule {
                 + " marque_v = '" + unVehicule.getMarque_v() + "',"
                 + " anneimmatri_v = '" + unVehicule.getAnneimmatri_v() + "',"
                 + " anneachat_v = '" + unVehicule.getAnneachat_v() + "',"
-                + " type_boite = '" + unVehicule.getType_boite() + "'"
+                + " type_boite = '" + unVehicule.getType_boite() + "',"
+                + " km = '" + unVehicule.getKm() + "'"
                 + " WHERE matricule = '" + unVehicule.getMatricule() + "';";
         try {
             uneBdd.seConnecter();
@@ -49,7 +51,7 @@ public class ModeleVehicule {
     }
 
     public static void deleteVehicule(String matricule) {
-        String requete = "DELETE FROM vehicule WHERE matricule = " + matricule + ";";
+        String requete = "DELETE FROM vehicule WHERE matricule = '" + matricule + "';";
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -78,7 +80,8 @@ public class ModeleVehicule {
                         desResultats.getString("marque_v"),
                         desResultats.getString("anneimmatri_v").substring(0, 4),
                         desResultats.getString("anneachat_v").substring(0, 4),
-                        desResultats.getString("type_boite"));
+                        desResultats.getString("type_boite"),
+                        desResultats.getFloat("km"));
                 // on ajoute le Vehicule dans l'ArrayList
                 lesVehicules.add(unVehicule);
             }
@@ -107,7 +110,8 @@ public class ModeleVehicule {
                         unResultat.getString("marque_v"),
                         unResultat.getString("anneimmatri_v"),
                         unResultat.getString("anneachat_v"),
-                        unResultat.getString("type_boite"));
+                        unResultat.getString("type_boite"),
+                        unResultat.getFloat("km"));
             }
             unStat.close();
             uneBdd.seDeconnecter();
@@ -138,7 +142,8 @@ public class ModeleVehicule {
                         unResultat.getString("marque_v"),
                         unResultat.getString("anneimmatri_v").substring(0, 4),
                         unResultat.getString("anneachat_v").substring(0, 4),
-                        unResultat.getString("type_boite"));
+                        unResultat.getString("type_boite"),
+                        unResultat.getFloat("km"));
             }
             unStat.close();
             uneBdd.seDeconnecter();

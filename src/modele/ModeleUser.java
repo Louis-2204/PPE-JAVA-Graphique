@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import controleur.User;
 
 public class ModeleUser {
-    private static Bdd uneBdd = new Bdd("54.81.36.203:13392", "autoecole", "alexys", "alexys");
+    private static Bdd uneBdd = new Bdd("3.227.101.247:13392", "autoecole", "alexys", "alexys");
 
     public static void insertUser(User unUser) {
         String requete = "INSERT INTO user VALUES ( null,'"
